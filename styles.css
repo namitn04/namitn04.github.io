@@ -1,24 +1,27 @@
-    /* Import PT Serif font */
+/* Import PT Serif font */
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-/* Light mode variables */
+/* ---------- CSS Variables ---------- */
 :root {
-    --primary: #006400;      /* Dark Green */
-    --secondary: #004d00;    /* Even Darker for headings */
-    --bg: #e8f5e9;           /* Light green background */
-    --card-bg: #ffffff;      /* White for content cards */
+    --primary: #006400;
+    --secondary: #004d00;
+    --bg: #e8f5e9;
+    --card-bg: #ffffff;
     --text: #333333;
+    --accent: #ff6f61;
 }
 
-/* Dark mode overrides (when body has .dark-mode class) */
+/* Dark Mode Overrides */
 body.dark-mode {
     --bg: #222222;
     --card-bg: #2a2a2a;
     --text: #e0e0e0;
-    --primary: #8FBC8F;  /* Lighter green for dark mode */
+    --primary: #8FBC8F;
     --secondary: #90EE90;
+    --accent: #ffb07c;
 }
 
+/* ---------- Global Styles ---------- */
 * {
     box-sizing: border-box;
 }
@@ -30,13 +33,53 @@ body {
     color: var(--text);
     font-family: 'PT Serif', serif;
     line-height: 1.6;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
 }
 
+/* ---------- Fullscreen Quote Page ---------- */
+#quote-screen {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+}
+
+.quote-content blockquote {
+    font-size: 2.5rem;
+    text-align: center;
+    max-width: 90%;
+    font-style: italic;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* ---------- Content Elements (Initially Hidden) ---------- */
+/* They start slightly shifted down with reduced opacity */
+header,
+#photo-gallery,
+main,
+footer {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* When "loaded" class is added, they fade/slide into place */
+body.loaded header,
+body.loaded #photo-gallery,
+body.loaded main,
+body.loaded footer {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---------- Header ---------- */
 header {
-    padding: 20px 40px;
+    padding: 1rem 2rem;
     background: var(--card-bg);
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 0.3rem solid var(--primary);
     text-align: center;
     position: sticky;
     top: 0;
@@ -49,132 +92,256 @@ header {
 header h1 {
     margin: 0;
     color: var(--secondary);
-    font-size: 2.8rem;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    font-weight: 700;
 }
 
-/* Container for the dynamic tagline */
 #typed-container {
-    margin-top: 8px;
+    margin-top: 0.5rem;
 }
 
 #typed-text {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--primary);
+    font-weight: bold;
 }
 
 .typed-cursor {
     display: inline;
 }
 
-/* Dark Mode Toggle Button */
+/* ---------- Dark Mode Toggle ---------- */
 #dark-mode-toggle {
-    margin-top: 10px;
-    padding: 5px 10px;
-    border: 1px solid var(--primary);
-    background: var(--card-bg);
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
     color: var(--secondary);
     cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.3s ease, color 0.3s ease;
+    border-radius: 50%;
+    font-size: 1.6rem;
+    transition: transform 0.3s ease;
 }
-
 #dark-mode-toggle:hover {
-    background: var(--primary);
-    color: var(--card-bg);
+    transform: scale(1.1);
 }
 
+/* ---------- Navigation ---------- */
 nav {
-    margin-top: 15px;
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
-
 nav a {
-    margin: 0 10px;
+    margin: 0.5rem 1rem;
     color: var(--secondary);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: bold;
+    font-size: 1.1rem;
     transition: color 0.3s;
 }
-
 nav a:hover {
     color: var(--primary);
 }
 
+/* ---------- Photo Gallery ---------- */
+#photo-gallery {
+    position: relative;
+    height: 50vh;
+    margin: 2rem 0;
+    overflow: hidden;
+}
+.gallery-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gallery-slider {
+    position: relative;
+    width: 80%;
+    height: 100%;
+    overflow: hidden;
+}
+.gallery-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gallery-slide.active {
+    opacity: 1;
+}
+.gallery-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+/* Gallery Navigation Buttons */
+.gallery-btn {
+    background: transparent;
+    border: none;
+    color: var(--secondary);
+    font-size: 2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.gallery-btn:hover {
+    color: var(--primary);
+}
+.gallery-btn.prev {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.gallery-btn.next {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ---------- Main Content ---------- */
 main {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
-
-/* Content sections styled as intuitive cards */
 section {
-    margin-bottom: 40px;
-    padding: 20px;
-    border-radius: 8px;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
     background: var(--card-bg);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
-
 section:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
-
 section h2 {
     color: var(--secondary);
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    border-bottom: 2px solid var(--primary);
-    padding-bottom: 5px;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-weight: 700;
+    border-bottom: 0.3rem solid var(--primary);
+    padding-bottom: 0.5rem;
 }
-
-section p, section ul {
-    font-size: 1rem;
-    margin: 10px 0;
-}
-
+section p,
 section ul {
-    list-style: disc inside;
-    margin-left: 20px;
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    font-weight: 500;
+}
+section ul {
+    list-style: disc;
+    padding-left: 1.5rem;
 }
 
+/* ---------- Footer ---------- */
 footer {
     text-align: center;
-    padding: 20px;
-    border-top: 2px solid var(--primary);
-    font-size: 0.9rem;
+    padding: 1rem;
+    border-top: 0.3rem solid var(--primary);
+    font-size: 1rem;
+    font-weight: bold;
 }
 
-/* Scroll Back Up Button */
+/* ---------- Back-to-Top Button ---------- */
 #back-to-top {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 1rem;
+    right: 1rem;
     background: var(--primary);
     color: var(--card-bg);
     border: none;
     border-radius: 50%;
-    padding: 10px 15px;
+    padding: 0.75rem 1rem;
     cursor: pointer;
     display: none;
     transition: background 0.3s ease;
     z-index: 1000;
 }
-
 #back-to-top:hover {
     background: var(--secondary);
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
+/* ---------- Responsive Adjustments ---------- */
+@media (max-width: 992px) {
     header h1 {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
     nav a {
-        margin: 0 5px;
+        margin: 0.5rem 0.75rem;
+        font-size: 1rem;
+    }
+    #photo-gallery {
+        height: 45vh;
+    }
+    .gallery-slider {
+        width: 90%;
+    }
+    section {
+        padding: 1.25rem;
+    }
+    section h2 {
+        font-size: 1.8rem;
+    }
+    section p,
+    section ul {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    #typed-text {
+        font-size: 1.2rem;
+    }
+    nav a {
+        margin: 0.5rem 0.5rem;
         font-size: 0.9rem;
     }
     main {
-        margin: 20px auto;
+        margin: 1.5rem auto;
+        padding: 0 0.75rem;
+    }
+    #photo-gallery {
+        height: 40vh;
+    }
+    .gallery-slider {
+        width: 100%;
+    }
+    section h2 {
+        font-size: 1.6rem;
+    }
+    section p,
+    section ul {
+        font-size: 0.9rem;
+    }
+    #back-to-top {
+        padding: 0.5rem 0.75rem;
+        font-size: 1.5rem;
+    }
+    .quote-content blockquote {
+        font-size: 1.8rem;
     }
 }
