@@ -1,55 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Namit's Website</title>
+    <title>Namit's Portfolio</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 <header>
-    <h1>Namit's Website</h1>
+    <h1>Namit</h1>
+    <!-- Dynamic tagline container -->
+    <div id="typed-container">
+        <span id="typed-text"></span>
+    </div>
+    <!-- Dark Mode Toggle Button -->
+    <button id="dark-mode-toggle">Toggle Dark Mode</button>
     <nav>
         <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
     </nav>
 </header>
 
-<section id="about">
-    <h2>About Me</h2>
-    <p>Hi, I'm Namit, a rising junior at the College of William & Mary majoring in Computational Applied Mathematics and Statistics with a minor in Biology. I'm passionate about bioinformatics, neuroscience, and applying computational methods to real-world challenges.</p>
-</section>
+<main>
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Me</h2>
+        <p>
+            Hi, I'm <strong style="color: var(--primary);">Namit</strong>, a rising junior at the College of William &amp; Mary majoring in Computational Applied Mathematics and Statistics with a minor in Biology. I'm passionate about bioinformatics, neuroscience, and applying computational methods to real‑world challenges. I strive to bridge the gap between data science and biological discovery.
+        </p>
+    </section>
 
-<section id="projects">
-    <h2>Projects</h2>
-    <ul>
-        <li><strong>iGEM Competition:</strong> Interdisciplinary synthetic biology research.</li>
-        <li><strong>Bioinformatics Projects:</strong> Applying data analysis to biological systems.</li>
-        <li><strong>Neuromorphic Computing:</strong> Exploring computational neuroscience concepts.</li>
-    </ul>
-</section>
+    <!-- Education Section -->
+    <section id="education">
+        <h2>Education</h2>
+        <p>
+            <strong>College of William &amp; Mary</strong> — B.S. in Computational Applied Mathematics and Statistics (Mathematical Biology), Minor in Biology.
+        </p>
+    </section>
 
-<section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:namit@example.com">namit@example.com</a></p>
-</section>
+    <!-- Undergraduate Experience & Extracurriculars Section -->
+    <section id="undergrad-exp">
+        <h2>Undergraduate Experience &amp; Extracurriculars</h2>
+        <p>
+            <strong>Research &amp; Projects:</strong> Participated in the iGEM Competition focusing on synthetic biology; conducted bioinformatics research analyzing large-scale biological data.
+        </p>
+        <p>
+            <strong>Extracurriculars:</strong>
+        </p>
+        <ul>
+            <li>Member, Undergraduate Research Society</li>
+            <li>Volunteer, STEM Outreach Program</li>
+            <li>President, Bioinformatics Club</li>
+        </ul>
+    </section>
+
+    <!-- Earlier Experience & Extracurriculars Section -->
+    <section id="earlier-exp">
+        <h2>Earlier Experience &amp; Extracurriculars</h2>
+        <p>
+            <strong>Early Research:</strong> Interned at a local biotech firm, assisting with data collection and preliminary analysis in a neuroscience lab.
+        </p>
+        <p>
+            <strong>Extracurriculars:</strong>
+        </p>
+        <ul>
+            <li>Captain, High School Robotics Team</li>
+            <li>Member, Science Olympiad</li>
+            <li>Volunteer, Community Science Workshops</li>
+        </ul>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>Skills</h2>
+        <ul>
+            <li>Programming: Python, R, MATLAB</li>
+            <li>Data Analysis &amp; Visualization: Pandas, NumPy, Matplotlib, Seaborn</li>
+            <li>Bioinformatics Tools: BLAST, Biopython, Galaxy</li>
+            <li>Mathematical Modeling &amp; Statistical Analysis</li>
+        </ul>
+    </section>
+</main>
 
 <footer>
+    <p>&copy; 2025 Namit. All rights reserved.</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Scroll Back Up Button -->
+<button id="back-to-top">↑</button>
 
+<!-- JavaScript Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize Typed.js
+        new Typed("#typed-text", {
+            strings: ["Bioinformatics Enthusiast", "Computational Thinker", "Innovative Researcher"],
+            typeSpeed: 50,
+            backSpeed: 25,
+            loop: true,
+            backDelay: 1500,
+            startDelay: 500
+        });
+
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        darkModeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Scroll back to top functionality
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+</script>
 </body>
 </html>
-
-<!--
-
-python -m http.server 8000
-http://[::]:8000/
-
--->
