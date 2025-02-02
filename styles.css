@@ -184,8 +184,8 @@ nav a:hover {
     opacity: 1;
 }
 .gallery-slide img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100%;
     object-fit: cover;
     display: block;
 }
@@ -261,25 +261,6 @@ footer {
     border-top: 0.3rem solid var(--primary);
     font-size: 1rem;
     font-weight: bold;
-}
-
-/* ---------- Back-to-Top Button ---------- */
-#back-to-top {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    background: var(--primary);
-    color: var(--card-bg);
-    border: none;
-    border-radius: 50%;
-    padding: 0.75rem 1rem;
-    cursor: pointer;
-    display: none;
-    transition: background 0.3s ease;
-    z-index: 1000;
-}
-#back-to-top:hover {
-    background: var(--secondary);
 }
 
 /* ---------- Responsive Adjustments ---------- */

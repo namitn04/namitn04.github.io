@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<!-- python -m http.server 8000 -->
+
 <!-- Fullscreen Quote Page -->
 <div id="quote-screen">
     <div class="quote-content">
@@ -43,13 +45,13 @@
         <button class="gallery-btn prev"><i class="fas fa-chevron-left"></i></button>
         <div class="gallery-slider">
             <div class="gallery-slide active">
-                <img src="image1.jpg" alt="Gallery Image 1" />
+                <img src="19900022.JPG" alt="Gallery Image 1" />
             </div>
             <div class="gallery-slide">
-                <img src="image2.jpg" alt="Gallery Image 2" />
+                <img src="25730009.JPG" alt="Gallery Image 2" />
             </div>
             <div class="gallery-slide">
-                <img src="image3.jpg" alt="Gallery Image 3" />
+                <img src="25730017.JPG" alt="Gallery Image 3" />
             </div>
         </div>
         <button class="gallery-btn next"><i class="fas fa-chevron-right"></i></button>
@@ -156,11 +158,11 @@
                 "Computational Thinker",
                 "Innovative Researcher"
             ],
-            typeSpeed: 100,
-            backSpeed: 50,
+            typeSpeed: 160,
+            backSpeed: 150,
             loop: true,
-            backDelay: 1500,
-            startDelay: 500
+            backDelay: 2500,
+            startDelay: 750
         });
 
         // Dark mode toggle functionality.
@@ -206,7 +208,7 @@
         setInterval(function () {
             currentSlide = (currentSlide + 1) % slides.length;
             showSlide(currentSlide);
-        }, 5000);
+        }, 15000);
     });
 </script>
 </body>
