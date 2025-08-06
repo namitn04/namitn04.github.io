@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <style>
-
         /* Global Reset */
         * {
             box-sizing: border-box;
@@ -121,7 +120,7 @@
             position: fixed;
             left: 0;
             right: 0;
-            bottom: -75vh;  /* Start hidden below the screen */
+            bottom: -75vh;
             height: 75vh;
             background-color: rgba(128, 128, 128, 0.9);
             transition: bottom 0.5s ease;
@@ -131,12 +130,10 @@
             z-index: 50;
         }
 
-        /* When open, slide up into view */
         .content-panel.open {
             bottom: 0;
         }
 
-        /* Close Button Styling */
         .close-btn {
             font-family: 'Plus Jakarta Sans', sans-serif;
             position: absolute;
@@ -150,6 +147,28 @@
             font-size: 16px;
             z-index: 51;
         }
+
+        /* Blog List Styles */
+        .blog-list {
+            list-style: none;
+            padding: 0;
+        }
+        .blog-list li {
+            margin-bottom: 15px;
+        }
+        .blog-list a {
+            text-decoration: none;
+            color: white;
+            background: rgba(128, 128, 128, 0.5);
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+        .blog-list a:hover {
+            background: rgba(128, 128, 128, 0.7);
+            transform: scale(1.02);
+        }
     </style>
 </head>
 <body>
@@ -162,7 +181,6 @@
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
-    <!-- Interactive Name: "Namit Nallapaneni" as one non‑wrapping line -->
     <div class="name-container" id="nameContainer">
       <span class="name-word">
         <span class="letter">N</span>
@@ -188,18 +206,16 @@
     </div>
 </div>
 
-<!-- Content Panel with a Close Button -->
 <div class="content-panel" id="contentPanel">
     <button class="close-btn" id="closePanel">CLOSE</button>
     <div class="panel-content"></div>
 </div>
 
 <script>
-    // JavaScript for the repulsion effect on each letter
     (function() {
         const letters = document.querySelectorAll('.name-container .letter');
-        const threshold = 250; // Distance threshold for reaction
-        const maxOffset = 120;  // Maximum offset for a stronger repulsion effect
+        const threshold = 250;
+        const maxOffset = 120;
 
         let frameId;
         document.addEventListener('mousemove', function(e) {
@@ -225,33 +241,33 @@
         });
     })();
 
-    // Content Mapping: Easily add or update content for each page
     const pageContent = {
         Home: `<h1>Home</h1>
          <p>Welcome to the homepage. This is the Home content.</p>`,
 
         About: `<h1>About Me</h1>
-            <p>Hey there! I'm a Junior at the <strong>College of William &amp; Mary</strong>, majoring in Computational &amp; Applied Mathematics and Statistics with a focus on Mathematical Biology, plus a minor in Biology. Basically, I love using math, code, and biology to solve tricky problems—especially when bioinformatics and synthetic biology are involved.</p>
-            <p>If you're curious about my work, check out my <a href="CV-Resume-NN.pdf" target="_blank">CV/Resume</a> and <a href="your_personal_statement.pdf" target="_blank">Personal Statement</a>.</p>
-            <p>When I'm not deep in equations and algorithms, you'll find me hunting for the best food spots or getting lost in music. Always up for a good meal and a great playlist!</p>`,
+            <p>Hey! I'm a Senior at the <strong>College of William &amp; Mary</strong>, majoring in Computational &amp; Applied Mathematics &amp; Statistics concentrated in Mathematical Biology. Basically, I love using math and code to solve tricky problems... especially when synthetic biology is involved.</p>
+            <p>If you're curious about my work, check out my <a href="CV_Resume.pdf" target="_blank">CV/Resume</a>.</p>
+            <p>When I'm not deep in equations and algorithms, you'll find me hunting for spicy food or getting lost in a music rabbit hole. I'm always up for a greedy meal and a groovy playlist!</p>`,
 
         Projects: `<h1>Projects</h1>
              <p>Coming soon!</p>`,
 
         Blog: `<h1>Blog</h1>
-         <p>Coming soon!</p>`,
+            <ul class="blog-list">
+                <li><a href="blog/post1.html">My First Blog Ever</a></li>
+            </ul>`,
 
         Contact: `<h1>Contact</h1>
             <p>namit.nlp@gmail.com</p>`
     };
-
 
     const navLinks = document.querySelectorAll('.nav-overlay a');
     const contentPanel = document.getElementById('contentPanel');
     const panelContent = document.querySelector('.panel-content');
     const closeBtn = document.getElementById('closePanel');
     let activeNav = null;
-    const transitionDuration = 500; // in ms, matching the CSS transition
+    const transitionDuration = 500;
 
     function openPanel(content) {
         panelContent.innerHTML = content;
@@ -268,13 +284,11 @@
             e.preventDefault();
             const navText = e.target.textContent.trim();
 
-            // If clicking the same nav item that's already open, close the panel.
             if (activeNav === navText && contentPanel.classList.contains('open')) {
                 closePanel();
                 return;
             }
 
-            // If panel is open with different content, slide it down, then update and slide up.
             if (contentPanel.classList.contains('open')) {
                 contentPanel.classList.remove('open');
                 setTimeout(() => {
@@ -282,17 +296,13 @@
                     openPanel(pageContent[navText] || `<h1>${navText}</h1><p>No content defined for ${navText}.</p>`);
                 }, transitionDuration);
             } else {
-                // Panel is closed; update content and slide it up.
                 activeNav = navText;
                 openPanel(pageContent[navText] || `<h1>${navText}</h1><p>No content defined for ${navText}.</p>`);
             }
         });
     });
 
-    // Close button functionality inside the panel
-    closeBtn.addEventListener('click', function() {
-        closePanel();
-    });
+    closeBtn.addEventListener('click', closePanel);
 </script>
 </body>
 </html>
