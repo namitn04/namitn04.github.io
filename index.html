@@ -33,6 +33,39 @@
             background: rgba(0, 0, 0, 0.3);
         }
 
+        /* ASCII image layer */
+        .ascii-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('ascii-bg.png') no-repeat center center/cover;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /*
+          This is the actual grey effect.
+          It sits only on top of the ASCII image, not the original photo.
+        */
+        .ascii-layer::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(155, 155, 155, 0.75);
+            pointer-events: none;
+        }
+
+        body.ascii-bg .ascii-layer {
+            opacity: 1;
+        }
+
         .hero::before {
             content: "";
             position: absolute;
@@ -43,6 +76,7 @@
             background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=");
             opacity: 0.2;
             pointer-events: none;
+            z-index: 1;
         }
 
         /* Nav Bar with semi-translucent grey background */
@@ -52,6 +86,7 @@
             left: 20px;
             display: flex;
             gap: 20px;
+            z-index: 5;
         }
 
         .nav-overlay ul {
@@ -82,6 +117,40 @@
             transform: scale(1.05);
         }
 
+        /* ASCII button, styled like the other nav buttons */
+        .ascii-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 5;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            background: rgba(128, 128, 128, 0.5);
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .ascii-toggle:hover {
+            background: rgba(128, 128, 128, 0.7);
+            transform: scale(1.05);
+        }
+
+        body.ascii-bg .nav-overlay a,
+        body.ascii-bg .ascii-toggle {
+            color: #111;
+            background: rgba(190, 190, 190, 0.72);
+        }
+
+        body.ascii-bg .nav-overlay a:hover,
+        body.ascii-bg .ascii-toggle:hover {
+            background: rgba(210, 210, 210, 0.84);
+        }
+
         /* Interactive Name Text positioned at bottom-right on larger screens */
         .name-container {
             position: absolute;
@@ -91,6 +160,7 @@
             color: white;
             pointer-events: none;
             white-space: nowrap;
+            z-index: 5;
         }
 
         /* Individual letter styling for repulsion effect */
@@ -105,6 +175,13 @@
             .nav-overlay a {
                 font-size: 16px;
             }
+
+            .ascii-toggle {
+                top: 65px;
+                right: 20px;
+                font-size: 16px;
+            }
+
             .name-container {
                 left: 50%;
                 top: 65%;
@@ -130,6 +207,15 @@
             z-index: 50;
         }
 
+        body.ascii-bg .content-panel {
+            background-color: rgba(145, 145, 145, 0.95);
+            color: #111;
+        }
+
+        body.ascii-bg .content-panel a {
+            color: #111;
+        }
+
         .content-panel.open {
             bottom: 0;
         }
@@ -146,6 +232,14 @@
             cursor: pointer;
             font-size: 16px;
             z-index: 51;
+        }
+
+        body.ascii-bg .close-btn {
+            color: #111;
+        }
+
+        body.ascii-bg .name-container {
+            color: #111;
         }
 
         /* Blog List Styles */
@@ -169,10 +263,21 @@
             background: rgba(128, 128, 128, 0.7);
             transform: scale(1.02);
         }
+
+        body.ascii-bg .blog-list a {
+            color: #111;
+            background: rgba(200, 200, 200, 0.72);
+        }
+
+        body.ascii-bg .blog-list a:hover {
+            background: rgba(215, 215, 215, 0.85);
+        }
     </style>
 </head>
 <body>
 <div class="hero">
+    <div class="ascii-layer"></div>
+
     <nav class="nav-overlay">
         <ul>
             <li><a href="#">About</a></li>
@@ -181,6 +286,9 @@
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
+
+    <button class="ascii-toggle" id="asciiToggle">ASCII</button>
+
     <div class="name-container" id="nameContainer">
       <span class="name-word">
         <span class="letter">N</span>
@@ -241,14 +349,26 @@
         });
     })();
 
+    const asciiToggle = document.getElementById('asciiToggle');
+
+    asciiToggle.addEventListener('click', function() {
+        document.body.classList.toggle('ascii-bg');
+
+        if (document.body.classList.contains('ascii-bg')) {
+            asciiToggle.textContent = 'PHOTO';
+        } else {
+            asciiToggle.textContent = 'ASCII';
+        }
+    });
+
     const pageContent = {
         Home: `<h1>Home</h1>
          <p>Welcome to the homepage. This is the Home content.</p>`,
 
         About: `<h1>About Me</h1>
-            <p>Howdy! I'm Namit (rhymes with "myth") and I'm a Senior at the <strong>College of William &amp; Mary</strong>, majoring in Computational &amp; Applied Mathematics &amp; Statistics concentrated in Mathematical Biology. </p>
-            <p>If you're curious about my work, check out my <a href="CV_Resume_Nov_25.pdf" target="_blank">CV/Resume</a>.</p>
-            <p>When I'm not hidden in the lab, you'll find me hunting for spicy food or getting lost in a music rabbit hole. I'm always up for a greedy meal and a groovy playlist!</p>`,
+            <p>Howdy! I'm Namit (rhymes with "myth") and I recently graduated from the <strong>College of William &amp; Mary</strong>, where I studied Computational &amp; Applied Mathematics &amp; Statistics with a concentration in Mathematical Biology.</p>
+            <p>If you're curious, check out my <a href="CV_Resume_Nov_25.pdf" target="_blank">CV/Resume</a>.</p>
+            <p>When I'm not working, you'll find me hunting for spicy food or getting lost in a music rabbit hole. I'm always up for a greedy meal and a groovy playlist...</p>`,
 
         Projects: `<h1>Projects</h1>
              <h3>Academic</h3>
